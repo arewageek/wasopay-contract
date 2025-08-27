@@ -1,9 +1,11 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
 export default buildModule("WasopayModule", (m) => {
-  const wasopay = m.contract("Wasopay");
+  // First deploy AccessControl contract
+  const accessControl = m.contract("AccessControl");
 
-  // m.call(counter, "incBy", [5n]);
+  // Then deploy WasoPay with AccessControl address
+  const wasopay = m.contract("WasoPay", [accessControl]);
 
-  return { wasopay };
+  return { accessControl, wasopay };
 });
